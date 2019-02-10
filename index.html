@@ -1,0 +1,164 @@
+<!DOCTYPE html>
+<html>
+	<head>
+		<meta charset="utf-8">
+		<title>Úloha Deset</title>
+		<style>
+			body, input, button {
+				font-family: "Trebuchet MS";
+			}
+			.deset-logo {
+				height: 2.3em;
+				vertical-align: middle;
+			}
+			fieldset {
+				border: 1px solid #000;
+			}
+			legend {
+				padding: 3px 6px;
+				background-color: #000;
+				color: #fff;
+			}
+			h2 {
+				margin: 0;
+				font-size: 1em;
+			}
+			fieldset h3 {
+				font-size: 1em;
+			}
+			label {
+				display: inline-block;
+				padding: 4px;
+				margin: 2px;
+			}
+			.digit-container {
+				overflow: hidden;
+			}
+			.digit-container label, #digits {
+				display: inline-block;
+			}
+			.digit-input {
+				width: 1.5em;
+				font-size: 1.2em;
+				padding: 2px 3px;
+				margin: 1px;
+			}
+			.num-input {
+				width: 5em;
+			}
+			dd label {
+				width: 18em;
+			}
+			button {
+				font-size: 1.2em;
+				padding: 6px 12px;
+			}
+			button {
+				background-color: #cec;
+			}
+			.ev {
+				background-color: #eec;
+			}
+			.od {
+				background-color: #cec;
+			}
+			#solutions {
+				background-color: #eee;
+				width: 90%;
+				height: 400px;
+				overflow: auto;
+				border: 1px solid #000;
+				padding: 8px;
+				line-height: 1.6em;
+			}
+			#sol_form .fieldset-cont {
+				float: left;
+				width: 50%;
+				min-width: 400px;
+			}
+			.sol-fieldset-font {
+				clear: left;
+			}
+			.func-part {
+				width: 75%;
+				float: left;
+			}
+			.info-box-cont {
+				float: right;
+				width: 25%;
+				min-width: 10em;
+				line-height: 1.3em;
+			}
+			.info-box {
+				padding: 1em;
+				font-size: .9em;
+			}
+			.author {
+				position: absolute;
+				top: 0;
+				right: 0;
+				padding: 1em 1.6em;
+			}
+		</style>
+	</head>
+	<h1>Matematická úloha <img class="deset-logo" src="deset-logo.png" alt="Deset"></h1>
+	<span class="author">Petr Pučil</span>
+	<div class="func-part">
+	<form id="sol_form">
+		<div class="fieldset-cont">
+		<fieldset>
+			<legend><h2>Povolené operace</h2></legend>
+			<dl class="inp-list" id="unary_ops">
+				<dt>Unární operace (s 1 vstupem)</dt>
+				<dd><label class="ev" for="unary_minus"><input type="checkbox" id="unary_minus" checked> Záporné číslo (-)</label></dd>
+				<dd><label class="od" for="unary_sqrt"><input type="checkbox" id="unary_sqrt" checked> Druhá odmocnina (√)</label></dd>
+				<dd><label class="ev" for="unary_factorial"><input type="checkbox" id="unary_factorial" checked> Faktoriál (!)</label></dd>
+			</dl>
+			<dl class="inp-list" id="binary_ops">
+				<dt>Binární operace (se 2 vstupy)</dt>
+				<dd><label class="ev" for="binary_plus"><input type="checkbox" id="binary_plus" checked> Sčítání (+)</label></dd>
+				<dd><label class="od" for="binary_mult"><input type="checkbox" id="binary_mult" checked> Násobení (*)</label></dd>
+				<dd><label class="ev" for="binary_div"><input type="checkbox" id="binary_div" checked> Dělení (/)</label></dd>
+				<dd><label class="od" for="binary_pow"><input type="checkbox" id="binary_pow" checked> Umocňování (^)</label></dd>
+			</dl>
+		</fieldset>
+		</div>
+		<div class="fieldset-cont">
+		<fieldset>
+			<legend><h2>Zadání</h2></legend>
+			<label>Počet číslic: <input class="num-input" type="number" min="2" max="10" value="4" id="digits_num"></label>
+			<div class="digit-container">
+				<label>Číslice: </label>
+				<div id="digits"></div>
+			</div>
+			<label for="desired_num">Kýžený výsledek: <input class="num-input" type="text" id="desired_num" value="10"></label>
+			<dl class="inp-list">
+				<dt>Počet řešení: </dt>
+				<dd><label class="ev" for="fst"><input type="radio" name="stop-policy" id="fst"> Najít první řešení</label></dd>
+				<dd><label class="od" for="arb"><input type="radio" name="stop-policy" id="arb" checked> Najít prvních <input class="num-input" type="number" id="sol_limit" value="20"> řešení</label></dd>
+				<dd><label class="ev" for="all"><input type="radio" name="stop-policy" id="all"> Najít všechna řešení</label></dd>
+			</dl>
+			<button type="submit">Najít řešení</button>
+		</fieldset>
+		</div>
+	</form>
+	<fieldset class="sol-fieldset-font">
+		<legend><h2>Řešení</h2></legend>
+		<div>Počet nalezených řešení: <span id="num_sols"></span></div>
+		<pre id="solutions"></pre>
+	</fieldset>
+	</div>
+	<div class="info-box-cont">
+	<div class="info-box">
+	<h2>Obvyklé zadání: </h2>
+	<p>Příklad: Doplň znaménka mezi čísly, tak aby součet byl 10.</p>
+	<p>1 2 5 5</p>
+	<p>Zadání úlohy jsou obvykle 4 číslice od 1 do 9. Úkolem je spojit číslice základními operacemi (plus, mínus, krát, děleno; lze použít i odmocninu a faktoriál) tak, aby výsledek celého výrazu byl 10.</p>
+	<h2>Varianty:</h2>
+	<p>Program má však více možností. <strong>Lze měnit počet vstupů, resp. zadaných číslic, povolené operace a výsledek.</strong> Avšak při vyšším počtu číslic už hledání řešení může trvat velmi dlouho. Pokud nechcete najít všechna řešení, ale jen omezený počet, zaškrtněte Najít prvních X řešení, najdou se rychleji. Může se však stát, že pro dané zadání program žádné řešení nenalezne.</p>
+	</div>
+	</div>
+	<script src="polyfills.js"></script>
+	<script src="deset.js"></script>
+	<script src="gui.js"></script>
+</html>
