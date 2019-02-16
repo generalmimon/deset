@@ -18,7 +18,7 @@ For example, given the digits 2 1 4 4, desired result 10 and all operations allo
 The algorithm can be used to find a solution with arbitrary number of given digits and any desired result (it's not hardcoded). It has 3 phases.
 ### Phase 1 - ``` get_grouped_digits_options(end) ```
 This function returns all possible options, how can the adjacent digits be merged to a n-digit number. It accepts one argument ```end```, which is the number of digits we want to ask about. For all ```end```ings greater than 0, it gradually declare last _k_ (k = 1, 2, 3, ..., end) digits a one _k_-digit number and calls itself for merging options in the rest of the digit sequence (with an argument ```end - k```). To every returned option for sequence with length ```end - k``` is added the k-digit number.
-For example, here is the diagram ```get_grouped_digits_options(4)``` (digits are marked as A, B, C, D):
+For example, here is the diagram similar to recursion tree for ```get_grouped_digits_options(4)``` (digits are marked as A, B, C, D):
 ```
 │· · · ·│
  ├── │· · ·│D│
@@ -37,7 +37,26 @@ For example, here is the diagram ```get_grouped_digits_options(4)``` (digits are
  │    └── │A│                    → │A│B C D│
  └── │A B C D│                   → │A B C D│
 ```
-As you can see, function ```get_grouped_digits_options(4)``` returns 8 options. The diagram isn't absolutely accurate, there aren't shown the calls with the argument 0. It looks like that the function is called in total 8 times, but it's actually called 11 times.
+As you can see, function ```get_grouped_digits_options(4)``` returns 8 options. The diagram isn't absolutely accurate, there aren't shown the calls with the argument 0. It looks like that the function is called in total 8 times, but it's actually called 11 times. In order to not doing same work repeatedly, it uses a cache which stores final results from previous calls. It really doesn't matter when we work with 4 digits, but for more digits, the speed-up is considerable.
 
 The function returns the options sorted by amount of numbers (the "associative array" with the amount as a key and an array of options as a value). The option is an array, where the number a<sub>_i_</sub> at index _i_ is the number of digits of the _i_<sup>th</sup> number. For example, if the given digits are 1 2 3 4 5 6 7 8 and the option is ```[1, 4, 1, 2]```, the numbers which we'll be working with are ```[1, 2345, 6, 78]```. The function ```get_specific_grouped_digits``` takes generic options returned by ```get_grouped_digits_options``` and inserts given digits instead.
 ### Phase 2 - ``` get_binary_grouping_options(digits_options) ```
+This function gives all possible options, in which order can binary operations be executed. In most cases, same operators executed in different order gives different results. For example, ```(2 * 3) + 4``` equals 10, however the result of ```2 * (3 + 4)``` is 12.
+
+It contains a loop, which takes first element from a queue, processes it and eventually adds new elements to the queue. It accepts an argument ```digits_options```, which is just initial state of the queue.
+
+Each element is an array of atoms. Atom can be a number or "binary expression". Binary expression is an array of exactly 2 atoms. When the element is processed, first is checked its length. If it contains only one atom, this atom is put into the array of results. If it contains more atoms, the loop chooses every pair of neighboring atoms and wraps them to a binary expression. New element created this way is added to the queue.
+
+To make it clear, an essential example is included below:
+```
+[0, 1, 2, 3]
+  ├── [[0, 1], 2, 3]
+  │     ├── [[[0, 1], 2], 3]
+  │     └── [[0, 1], [2, 3]]
+  ├── [0, [1, 2], 3]
+  │     ├── [[0, [1, 2]], 3]
+  │     └── [0, [[1, 2], 3]]
+  └── [0, 1, [2, 3]]
+        ├── [[0, 1], [2, 3]]
+        └── [0, [1, [2, 3]]]
+```
