@@ -144,8 +144,8 @@ function binary_pow(a, b) {
 			} else {
 				var a_lower_boundary = -Math.pow(2, 53 / b),
 					a_upper_boundary;
-				if (b > 0 || b < -537/512) {
-					a_upper_boundary = -Math.pow(2, -1074 / b);
+				if (b > 0 || b < -42/53) {
+					a_upper_boundary = -Math.pow(2, -42 / b);
 				} else {
 					a_upper_boundary = Infinity;
 				}
@@ -164,7 +164,7 @@ function binary_pow(a, b) {
 				return 1;
 			} else {
 				var b_boundary_upper = 53 / Math.log2(a),
-					b_boundary_lower = -1074 / Math.log2(a);
+					b_boundary_lower = -42 / Math.log2(a);
 				if (a < 1) {
 					if (b > b_boundary_upper && b < b_boundary_lower) {
 						return Math.pow(a, b);
