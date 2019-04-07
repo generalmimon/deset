@@ -320,7 +320,6 @@ function get_solutions(sequence, desired_num, sol_limit) {
 			for (var i_gd = 0, i_gd_len = grouped_digits_options_by_len[l].length, gd_opt; gd_opt = grouped_digits_options_by_len[l][i_gd], i_gd < i_gd_len; i_gd++) {
 				var binary_grouping = get_specific_binary_grouping(bg_opt, gd_opt),
 					sols = eval_potential_solutions(binary_grouping, desired_num);
-				console.log(JSON.stringify(binary_grouping));
 				for (var i_sol = 0, sols_len = Math.min(sols.length, sol_limit); i_sol < sols_len; i_sol++) {
 					solutions.push(sols[i_sol]);
 				}
@@ -333,7 +332,6 @@ function get_solutions(sequence, desired_num, sol_limit) {
 	}
 	return solutions;
 }
-
 
 function get_readable_unary_op(unary_op, val) {
 	var num_unary = UNARY_OPERATORS.length,

@@ -72,7 +72,7 @@ function printSolutions() {
 		readable_rows.push(Deset.get_readable_solution(sols[j]));
 	}
 	if(readable_rows.length === 0) {
-		readable_rows.push("Nebylo nalezeno žádné řešení.");
+		readable_rows.push("No solution found.");//Nebylo nalezeno žádné řešení.
 	}
 	setTextContent(solOutput, readable_rows.join("\n"));
 	return false;

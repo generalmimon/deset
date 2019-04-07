@@ -1,6 +1,6 @@
 # <img src="deset-logo.png" alt="Deset" width="200">
 ## Introduction
-The goal of this project is to solve the task Deset. There are given 4 digits from 1 to 9, e.g. 1 2 5 2. The task is to fill in numerical operators (+, −, ×, ÷, √ and !) so that the result of the created expression is 10. All digits must be used. Changing order of the digits is not allowed (that would be too easy), but adjacent digits can be merged to multi-digit number.
+The goal of this project is to solve the task Deset (Czech: "ten"). There are given 4 digits from 1 to 9, e.g. 1 2 5 2. The task is to fill in numerical operators (+, −, ×, ÷, √ and !) so that the result of the created expression is 10. All digits must be used. Changing order of the digits is not allowed (that would be too easy), but adjacent digits can be merged to multi-digit number.
 
 For example, given the digits 2 1 4 4, desired result 10 and all operations allowed, a bunch of solutions are possible:
 * <img src="https://latex.codecogs.com/gif.latex?-2&plus;\sqrt{144}=10" alt="-2+\sqrt{144}=10" />
@@ -14,6 +14,11 @@ For example, given the digits 2 1 4 4, desired result 10 and all operations allo
 * <img src="https://latex.codecogs.com/gif.latex?\frac{2\cdot(1&plus;4)!}{4!}=10" alt="\frac{2\cdot(1+4)!}{4!}=10" />
 * <img src="https://latex.codecogs.com/gif.latex?2^{1&plus;\sqrt{4}}&plus;\sqrt{4}=10" alt="2^{1+\sqrt{4}}+\sqrt{4}=10" />
 ... and many others.
+
+[Here is the page](https://generalmimon.github.io/deset/index.html) where you can play with the algorithm and find solutions.
+
+If you are familiar with Python, you might want to look into the [Python code](blob/master/deset.py).
+
 ## Algorithm
 The algorithm can be used to find a solution with arbitrary number of given digits and any desired result (it's not hardcoded). It has 3 phases.
 ### Phase 1 - ``` get_grouped_digits_options(end) ```
@@ -37,7 +42,7 @@ For example, here is the diagram similar to recursion tree for ```get_grouped_di
  │    └── │A│                    → │A│B C D│
  └── │A B C D│                   → │A B C D│
 ```
-As you can see, function ```get_grouped_digits_options(4)``` returns 8 options. The diagram isn't absolutely accurate, there aren't shown the calls with the argument 0. It looks like that the function is called in total 8 times, but it's actually called 11 times. In order to not doing same work repeatedly, it uses a cache which stores final results from previous calls. It really doesn't matter when we work with 4 digits, but for more digits, the speed-up is considerable.
+As you can see, function ```get_grouped_digits_options(4)``` returns 8 options. The diagram isn't absolutely accurate, there aren't shown the calls with the argument 0. It looks like that the function is called in total 8 times, but it's actually called 11 times. In order not to do same work repeatedly, it uses a cache which stores final results from previous calls. It really doesn't matter when we work with 4 digits, but for more digits, the speed-up is considerable.
 
 The function returns the options sorted by amount of numbers (the "associative array" with the amount as a key and an array of options as a value). The option is an array, where the number a<sub>_i_</sub> at index _i_ is the number of digits of the _i_<sup>th</sup> number. For example, if the given digits are 1 2 3 4 5 6 7 8 and the option is ```[1, 4, 1, 2]```, the numbers which we'll be working with are ```[1, 2345, 6, 78]```. The function ```get_specific_grouped_digits``` takes generic options returned by ```get_grouped_digits_options``` and inserts given digits instead.
 ### Phase 2 - ``` get_binary_grouping_options(digits_options) ```

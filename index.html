@@ -2,7 +2,7 @@
 <html>
 	<head>
 		<meta charset="utf-8">
-		<title>Úloha Deset</title>
+		<title>Task Deset</title>
 		<style>
 			body, input, button {
 				font-family: "Trebuchet MS";
@@ -101,61 +101,62 @@
 			}
 		</style>
 	</head>
-	<h1>Matematická úloha <img class="deset-logo" src="deset-logo.png" alt="Deset"></h1>
+	<h1>Mathematical task <img class="deset-logo" src="deset-logo.png" alt="Deset"></h1>
 	<span class="author">Petr Pučil</span>
 	<div class="func-part">
 	<form id="sol_form">
 		<div class="fieldset-cont">
 		<fieldset>
-			<legend><h2>Povolené operace</h2></legend>
+			<legend><h2>Allowed operations</h2></legend>
 			<dl class="inp-list" id="unary_ops">
-				<dt>Unární operace (s 1 vstupem)</dt>
-				<dd><label class="ev" for="unary_minus"><input type="checkbox" id="unary_minus" checked> Záporné číslo (-)</label></dd>
-				<dd><label class="od" for="unary_sqrt"><input type="checkbox" id="unary_sqrt" checked> Druhá odmocnina (√)</label></dd>
-				<dd><label class="ev" for="unary_factorial"><input type="checkbox" id="unary_factorial" checked> Faktoriál (!)</label></dd>
+				<dt>Unary operations (with 1 input)</dt>
+				<dd><label class="ev" for="unary_minus"><input type="checkbox" id="unary_minus" checked> Negation (-)</label></dd>
+				<dd><label class="od" for="unary_sqrt"><input type="checkbox" id="unary_sqrt" checked> Square root (√)</label></dd>
+				<dd><label class="ev" for="unary_factorial"><input type="checkbox" id="unary_factorial" checked> Factorial (!)</label></dd>
 			</dl>
 			<dl class="inp-list" id="binary_ops">
-				<dt>Binární operace (se 2 vstupy)</dt>
-				<dd><label class="ev" for="binary_plus"><input type="checkbox" id="binary_plus" checked> Sčítání (+)</label></dd>
-				<dd><label class="od" for="binary_mult"><input type="checkbox" id="binary_mult" checked> Násobení (*)</label></dd>
-				<dd><label class="ev" for="binary_div"><input type="checkbox" id="binary_div" checked> Dělení (/)</label></dd>
-				<dd><label class="od" for="binary_pow"><input type="checkbox" id="binary_pow" checked> Umocňování (^)</label></dd>
+				<dt>Binary operations (with 2 inputs)</dt>
+				<dd><label class="ev" for="binary_plus"><input type="checkbox" id="binary_plus" checked> Addition (+)</label></dd>
+				<dd><label class="od" for="binary_mult"><input type="checkbox" id="binary_mult" checked> Multiplication (*)</label></dd>
+				<dd><label class="ev" for="binary_div"><input type="checkbox" id="binary_div" checked> Division (/)</label></dd>
+				<dd><label class="od" for="binary_pow"><input type="checkbox" id="binary_pow" checked> Exponentation (^)</label></dd>
 			</dl>
 		</fieldset>
 		</div>
 		<div class="fieldset-cont">
 		<fieldset>
-			<legend><h2>Zadání</h2></legend>
-			<label>Počet číslic: <input class="num-input" type="number" min="2" max="10" value="4" id="digits_num"></label>
+			<legend><h2>Task</h2></legend>
+			<label>Number of digits: <input class="num-input" type="number" min="2" max="10" value="4" id="digits_num"></label>
 			<div class="digit-container">
-				<label>Číslice: </label>
+				<label>Digits: </label>
 				<div id="digits"></div>
 			</div>
-			<label for="desired_num">Kýžený výsledek: <input class="num-input" type="text" id="desired_num" value="10"></label>
+			<label for="desired_num">Desired result: <input class="num-input" type="text" id="desired_num" value="10"></label>
 			<dl class="inp-list">
-				<dt>Počet řešení: </dt>
-				<dd><label class="ev" for="fst"><input type="radio" name="stop-policy" id="fst"> Najít první řešení</label></dd>
-				<dd><label class="od" for="arb"><input type="radio" name="stop-policy" id="arb" checked> Najít prvních <input class="num-input" type="number" id="sol_limit" value="20"> řešení</label></dd>
-				<dd><label class="ev" for="all"><input type="radio" name="stop-policy" id="all"> Najít všechna řešení</label></dd>
+				<dt>Number of solutions: </dt>
+				<dd><label class="ev" for="fst"><input type="radio" name="stop-policy" id="fst"> Find only the first solution</label></dd>
+				<dd><label class="od" for="arb"><input type="radio" name="stop-policy" id="arb" checked> Find the first <input class="num-input" type="number" id="sol_limit" min="1" value="20"> solutions</label></dd>
+				<dd><label class="ev" for="all"><input type="radio" name="stop-policy" id="all"> Find all solutions</label></dd>
 			</dl>
-			<button type="submit">Najít řešení</button>
+			<button type="submit">Find solutions</button>
 		</fieldset>
 		</div>
 	</form>
 	<fieldset class="sol-fieldset-font">
-		<legend><h2>Řešení</h2></legend>
-		<div>Počet nalezených řešení: <span id="num_sols"></span></div>
+		<legend><h2>Solutions</h2></legend>
+		<div>Number of found solutions: <span id="num_sols">-</span></div>
 		<pre id="solutions"></pre>
 	</fieldset>
 	</div>
 	<div class="info-box-cont">
 	<div class="info-box">
-	<h2>Obvyklé zadání: </h2>
-	<p>Příklad: Doplň znaménka mezi čísly, tak aby součet byl 10.</p>
+	<h2>Usual task: </h2>
+	<p>Example: Inserting operators between digits so that the result is 10.</p>
 	<p>1 2 5 5</p>
-	<p>Zadání úlohy jsou obvykle 4 číslice od 1 do 9. Úkolem je spojit číslice základními operacemi (plus, mínus, krát, děleno; lze použít i odmocninu a faktoriál) tak, aby výsledek celého výrazu byl 10.</p>
-	<h2>Varianty:</h2>
-	<p>Program má však více možností. <strong>Lze měnit počet vstupů, resp. zadaných číslic, povolené operace a výsledek.</strong> Avšak při vyšším počtu číslic už hledání řešení může trvat velmi dlouho. Pokud nechcete najít všechna řešení, ale jen omezený počet, zaškrtněte Najít prvních X řešení, najdou se rychleji. Může se však stát, že pro dané zadání program žádné řešení nenalezne.</p>
+	<p>There are given 4 digits from 1 to 9. The task is to fill in numerical operators (+, −, ×, ÷, √ and !) so that the result of the created expression is 10.</p>
+	<h2>Variations: </h2>
+	<p>However, the program has more options. <strong>It is possible to change the number of entered digits, allowed operations and result.</strong> Finding a solution for higher number of digits may take a very long time. If you don't want to find all solutions, but only a limited number, check Find the first X solutions, it'll be faster.</p>
+	<p>There may be no solution for a given input.</p>
 	</div>
 	</div>
 	<script src="polyfills.js"></script>
