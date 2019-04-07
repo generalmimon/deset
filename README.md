@@ -15,9 +15,9 @@ For example, given the digits 2 1 4 4, desired result 10 and all operations allo
 * <img src="https://latex.codecogs.com/gif.latex?2^{1&plus;\sqrt{4}}&plus;\sqrt{4}=10" alt="2^{1+\sqrt{4}}+\sqrt{4}=10" />
 ... and many others.
 
-[Here is the page](https://generalmimon.github.io/deset/index.html) where you can play with the algorithm and find solutions.
+[**Here is the page**](https://generalmimon.github.io/deset/index.html) where you can play with the algorithm and find solutions.
 
-If you are familiar with Python, you might want to look into the [Python code](blob/master/deset.py).
+If you are familiar with Python, you might want to look into the [Python code](deset.py).
 
 ## Algorithm
 The algorithm can be used to find a solution with arbitrary number of given digits and any desired result (it's not hardcoded). It has 3 phases.
