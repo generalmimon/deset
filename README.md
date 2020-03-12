@@ -3,16 +3,16 @@
 The goal of this project is to solve the task Deset (Czech: "ten"). There are given 4 digits from 1 to 9, e.g. 1 2 5 2. The task is to fill in numerical operators (+, −, ×, ÷, √ and !) so that the result of the created expression is 10. All digits must be used. Changing order of the digits is not allowed (that would be too easy), but adjacent digits can be merged to multi-digit number.
 
 For example, given the digits 2 1 4 4, desired result 10 and all operations allowed, a bunch of solutions are possible:
-* <img src="https://latex.codecogs.com/gif.latex?-2&plus;\sqrt{144}=10" alt="-2+\sqrt{144}=10" />
-* <img src="https://latex.codecogs.com/gif.latex?\sqrt{21&plus;4}\cdot\sqrt{4}=10" alt="\sqrt{21+4}\cdot\sqrt{4}=10" />
-* <img src="https://latex.codecogs.com/gif.latex?(-21&plus;4!)!&plus;4=10" alt="(-21+4!)!+4=10" />
-* <img src="https://latex.codecogs.com/gif.latex?(-2&plus;14)-\sqrt{4}=10" alt="(-2+14)-\sqrt{4}=10" />
-* <img src="https://latex.codecogs.com/gif.latex?(2^1&plus;4)&plus;4=10" alt="(2^1+4)+4=10" />
-* <img src="https://latex.codecogs.com/gif.latex?(2^1\cdot4)&plus;\sqrt4=10" alt="(2^1\cdot4)+\sqrt4=10" />
-* <img src="https://latex.codecogs.com/gif.latex?-\frac{2}{1}&plus;\frac{4!}{\sqrt{4}}=10" alt="-\frac{2}{1}+\frac{4!}{\sqrt{4}}=10" />
-* <img src="https://latex.codecogs.com/gif.latex?\sqrt{{((2&plus;1)!&plus;4)}^{\sqrt{4}}}=10" alt="\sqrt{{((2+1)!+4)}^{\sqrt{4}}}=10">
-* <img src="https://latex.codecogs.com/gif.latex?\frac{2\cdot(1&plus;4)!}{4!}=10" alt="\frac{2\cdot(1+4)!}{4!}=10" />
-* <img src="https://latex.codecogs.com/gif.latex?2^{1&plus;\sqrt{4}}&plus;\sqrt{4}=10" alt="2^{1+\sqrt{4}}+\sqrt{4}=10" />
+* <img src="https://math.now.sh?from=-2%2B%5Csqrt%7B144%7D%3D10" alt="-2+\sqrt{144}=10" />
+* <img src="https://math.now.sh?from=%5Csqrt%7B21%2B4%7D%5Ccdot%5Csqrt%7B4%7D%3D10" alt="\sqrt{21+4}\cdot\sqrt{4}=10" />
+* <img src="https://math.now.sh?from=%28-21%2B4!%29!%2B4%3D10" alt="(-21+4!)!+4=10" />
+* <img src="https://math.now.sh?from=%28-2%2B14%29-%5Csqrt%7B4%7D%3D10" alt="(-2+14)-\sqrt{4}=10" />
+* <img src="https://math.now.sh?from=%282%5E1%2B4%29%2B4%3D10" alt="(2^1+4)+4=10" />
+* <img src="https://math.now.sh?from=%282%5E1%5Ccdot4%29%2B%5Csqrt4%3D10" alt="(2^1\cdot4)+\sqrt4=10" />
+* <img src="https://math.now.sh?from=-%5Cfrac%7B2%7D%7B1%7D%2B%5Cfrac%7B4!%7D%7B%5Csqrt%7B4%7D%7D%3D10" alt="-\frac{2}{1}+\frac{4!}{\sqrt{4}}=10" />
+* <img src="https://math.now.sh?from=%5Csqrt%7B%7B%28(2%2B1%29!%2B4)%7D%5E%7B%5Csqrt%7B4%7D%7D%7D%3D10" alt="\sqrt{{((2+1)!+4)}^{\sqrt{4}}}=10">
+* <img src="https://math.now.sh?from=%5Cfrac%7B2%5Ccdot%281%2B4%29!%7D%7B4!%7D%3D10" alt="\frac{2\cdot(1+4)!}{4!}=10" />
+* <img src="https://math.now.sh?from=2%5E%7B1%2B%5Csqrt%7B4%7D%7D%2B%5Csqrt%7B4%7D%3D10" alt="2^{1+\sqrt{4}}+\sqrt{4}=10" />
 ... and many others.
 
 [**Here is the page**](https://generalmimon.github.io/deset/index.html) where you can play with the algorithm and find solutions.
