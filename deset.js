@@ -23,7 +23,7 @@ function get_grouped_digits_options(end) {
 			}
 		}
 	}
-	
+
 	cache[end] = options_by_len;
 	return options_by_len;
 }
@@ -330,34 +330,41 @@ function get_solutions(sequence, desired_num, sol_limit) {
 	return solutions;
 }
 
-function get_readable_unary_op(unary_op, val) {
-	var num_unary = UNARY_OPERATORS.length,
-		fact_idx = UNARY_OPERATORS.indexOf('!'),
-		print_res = val.toString(),
-		comb_l = unary_op[0],
-		n = unary_op[1];
-	for (var t = 0; t < comb_l; t++) {
-		var left_weight = Math.pow(num_unary, t + 1),
-			right_weight = Math.pow(num_unary, t),
-			unary_idx = Math.floor((n % left_weight - n % right_weight) / right_weight);
-		if(unary_idx === fact_idx) {
-			print_res = '(' + print_res + ')' + UNARY_OPERATORS[unary_idx];
-		} else {
-			print_res = UNARY_OPERATORS[unary_idx] + '(' + print_res + ')';
+var HumanPrinter = (function() {
+	function get_readable_unary_op(unary_op, val) {
+		var num_unary = UNARY_OPERATORS.length,
+			fact_idx = UNARY_OPERATORS.indexOf('!'),
+			print_res = val.toString(),
+			comb_l = unary_op[0],
+			n = unary_op[1];
+		for (var t = 0; t < comb_l; t++) {
+			var left_weight = Math.pow(num_unary, t + 1),
+				right_weight = Math.pow(num_unary, t),
+				unary_idx = Math.floor((n % left_weight - n % right_weight) / right_weight);
+			if(unary_idx === fact_idx) {
+				print_res = '(' + print_res + ')' + UNARY_OPERATORS[unary_idx];
+			} else {
+				print_res = UNARY_OPERATORS[unary_idx] + '(' + print_res + ')';
+			}
+		}
+		return print_res;
+	}
+
+	function get_readable_solution(atom) {
+		if (typeof atom === "number") {
+			return atom.toString();
+		} else if (atom.length === 2) {
+			return get_readable_unary_op(atom[0], get_readable_solution(atom[1]));
+		} else if (atom.length === 3) {
+			return '(' + get_readable_solution(atom[1]) + BINARY_OPERATORS[atom[0]] + get_readable_solution(atom[2]) + ')';
 		}
 	}
-	return print_res;
-}
+	return {
+		get_readable_unary_op: get_readable_unary_op,
+		get_readable_solution: get_readable_solution
+	};
+})();
 
-function get_readable_solution(atom) {
-	if (typeof atom === "number") {
-		return atom.toString();
-	} else if (atom.length === 2) {
-		return get_readable_unary_op(atom[0], get_readable_solution(atom[1]));
-	} else if (atom.length === 3) {
-		return '(' + get_readable_solution(atom[1]) + BINARY_OPERATORS[atom[0]] + get_readable_solution(atom[2]) + ')';
-	}
-}
 function set_unary_enabled_state(op_name, value) {
 	unary_enabled[op_name] = value;
 }
@@ -366,7 +373,7 @@ function set_binary_enabled_state(op_name, value) {
 }
 return {
 	get_solutions: get_solutions,
-	get_readable_solution: get_readable_solution,
+	get_readable_solution: HumanPrinter.get_readable_solution,
 	set_unary_enabled_state: set_unary_enabled_state,
 	set_binary_enabled_state: set_binary_enabled_state
 };
