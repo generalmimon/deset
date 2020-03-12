@@ -241,19 +241,16 @@ function eval_potential_solutions(binary_grouping, desired_num) {
 	for (var i_rslt = 0, rslts_len = rslts.length, rslt; rslt = rslts[i_rslt], i_rslt < rslts_len; i_rslt++) {
 		for (var comb_l in unary_operation_combos) {
 			comb_l = +comb_l;
-			for (var i_n = 0, n_len = unary_operation_combos[comb_l].length, n; n = unary_operation_combos[comb_l][i_n], i_n < n_len; i_n++) {
+			unaryComboLoop: for (var i_n = 0, n_len = unary_operation_combos[comb_l].length, n; n = unary_operation_combos[comb_l][i_n], i_n < n_len; i_n++) {
 				var rslt_val = rslt[0];
 				for (var t = 0; t < comb_l; t++) {
 					var left_weight = Math.pow(num_unary, t + 1),
 						right_weight = Math.pow(num_unary, t),
 						unary_idx = Math.floor(((n % left_weight) - (n % right_weight)) / right_weight);
 					rslt_val = UNARY_OPERATIONS[unary_idx](rslt_val);
-					if (rslt_val === false) {
-						break;
+					if (rslt_val === false || rslt_val === rslt[0]) {
+						continue unaryComboLoop;
 					}
-				}
-				if (rslt_val === false) {
-					continue;
 				}
 				if (desired_num === false || rslt_val === desired_num) {
 					solutions.push([rslt_val, [[comb_l, n], rslt[1]]]);
