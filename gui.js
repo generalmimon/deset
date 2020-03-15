@@ -69,7 +69,7 @@ function printSolutions() {
 		num_sols = sols.length;
 	setTextContent(numSols, num_sols);
 	for(var j = 0; j < num_sols; j++) {
-		readable_rows.push(Deset.get_readable_solution(sols[j]));
+		readable_rows.push(Deset.LatexPrinter.strip_parens(Deset.LatexPrinter.get_readable_solution(sols[j])));
 	}
 	if(readable_rows.length === 0) {
 		readable_rows.push("No solution found.");//Nebylo nalezeno žádné řešení.
