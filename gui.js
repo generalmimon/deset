@@ -10,7 +10,8 @@ var digitsNum = m("digits_num"),
 var stopOpts = [m("fst"), m("arb"), m("all")],
 	desiredNum = m("desired_num"),
 	solLimit = m("sol_limit"),
-	numSols = m("num_sols");
+	numSols = m("num_sols"),
+	printLatex = m("print_latex");
 function setTextContent(el, text) {
 	var propertyName = ("textContent" in el) ? "textContent" : "innerText";
 	el[propertyName] = text;
@@ -64,17 +65,27 @@ function printSolutions() {
 			break;
 		}
 	}
+
 	var sols = Deset.get_solutions(digits, desired_num, sol_limit),
-		readable_rows = [],
-		num_sols = sols.length;
+		content = document.createDocumentFragment(),
+		num_sols = sols.length,
+		use_latex = printLatex.checked;
 	setTextContent(numSols, num_sols);
 	for(var j = 0; j < num_sols; j++) {
-		readable_rows.push(Deset.LatexPrinter.strip_parens(Deset.LatexPrinter.get_readable_solution(sols[j])));
+		var p = document.createElement('p');
+		if (use_latex) {
+			var expr = Deset.LatexPrinter.strip_parens(Deset.LatexPrinter.get_readable_solution(sols[j]));
+			katex.render(expr, p);
+		} else {
+			setTextContent(p, Deset.HumanPrinter.strip_parens(Deset.HumanPrinter.get_readable_solution(sols[j])));
+		}
+		content.appendChild(p);
 	}
-	if(readable_rows.length === 0) {
-		readable_rows.push("No solution found.");//Nebylo nalezeno žádné řešení.
+	solOutput.innerHTML = "";
+	if(num_sols < 1) {
+		content.appendChild(document.createTextNode("No solution found."));//Nebylo nalezeno žádné řešení.
 	}
-	setTextContent(solOutput, readable_rows.join("\n"));
+	solOutput.appendChild(content);
 	return false;
 }
 solForm.onsubmit = printSolutions;

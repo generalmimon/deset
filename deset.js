@@ -330,6 +330,51 @@ function get_solutions(sequence, desired_num, sol_limit) {
 	return solutions;
 }
 
+var HumanPrinter = (function() {
+	function get_readable_unary_op(unary_op, atom) {
+		var num_unary = UNARY_OPERATORS.length,
+			print_res = get_readable_solution(atom),
+			comb_l = unary_op[0],
+			n = unary_op[1];
+		for (var t = 0; t < comb_l; t++) {
+			var left_weight = Math.pow(num_unary, t + 1),
+				right_weight = Math.pow(num_unary, t),
+				unary_idx = Math.floor((n % left_weight - n % right_weight) / right_weight);
+			switch (UNARY_OPERATORS[unary_idx]) {
+				case '-':
+					print_res = '-' + print_res;
+					break;
+				case '√':
+					print_res = '√(' + strip_parens(print_res) + ')';
+					break;
+				case '!':
+					print_res = print_res + '!';
+					break;
+			}
+		}
+		return print_res;
+	}
+
+	function get_readable_solution(atom) {
+		if (typeof atom === "number") {
+			return atom.toString();
+		} else if (atom.length === 2) {
+			return get_readable_unary_op(atom[0], atom[1]);
+		} else if (atom.length === 3) {
+			return '(' + get_readable_solution(atom[1]) + BINARY_OPERATORS[atom[0]] + get_readable_solution(atom[2]) + ')';
+		}
+	}
+
+	function strip_parens(str) {
+		return str.charAt(0) === '(' && str.charAt(str.length - 1) === ')' ? str.substring(1, str.length - 1) : str;
+	}
+	return {
+		get_readable_unary_op: get_readable_unary_op,
+		get_readable_solution: get_readable_solution,
+		strip_parens: strip_parens
+	};
+})();
+
 var LatexPrinter = (function() {
 	function get_readable_unary_op(unary_op, atom) {
 		var num_unary = UNARY_OPERATORS.length,
@@ -364,12 +409,14 @@ var LatexPrinter = (function() {
 			var left = get_readable_solution(atom[1]);
 			var right = get_readable_solution(atom[2]);
 			switch (BINARY_OPERATORS[atom[0]]) {
+				case '+':
+					return '(' + left + (right.charAt(0) !== '-' ? '+' : '') + right + ')';
 				case '*':
 					return '(' + left + '\\cdot' + right + ')';
 				case '/':
 					return '\\frac{' + left + '}{' + right + '}';
-				default:
-					return '(' + left + BINARY_OPERATORS[atom[0]] + right + ')';
+				case '^':
+					return '(' + left + '^{' + right + '})';
 			}
 		}
 	}
@@ -392,6 +439,7 @@ function set_binary_enabled_state(op_name, value) {
 }
 return {
 	get_solutions: get_solutions,
+	HumanPrinter: HumanPrinter,
 	LatexPrinter: LatexPrinter,
 	set_unary_enabled_state: set_unary_enabled_state,
 	set_binary_enabled_state: set_binary_enabled_state
