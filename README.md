@@ -46,7 +46,7 @@ As you can see, function ```get_grouped_digits_options(4)``` returns 8 options. 
 
 The function returns the options sorted by amount of numbers (the "associative array" with the amount as a key and an array of options as a value). The option is an array, where the number a<sub>_i_</sub> at index _i_ is the number of digits of the _i_<sup>th</sup> number. For example, if the given digits are 1 2 3 4 5 6 7 8 and the option is ```[1, 4, 1, 2]```, the numbers which we'll be working with are ```[1, 2345, 6, 78]```. The function ```get_specific_grouped_digits``` takes generic options returned by ```get_grouped_digits_options``` and inserts given digits instead.
 ### Phase 2 - ``` get_binary_grouping_options(digits_options) ```
-This function gives all possible options, in which order can binary operations be executed. In most cases, same operators executed in different order gives different results. For example, ```(2 * 3) + 4``` equals 10, however the result of ```2 * (3 + 4)``` is 12.
+This function gives all possible options, in which order can binary operations be executed. In most cases, same operators executed in different order gives different results. For example, ```(2 * 3) + 4``` equals 10, however the result of ```2 * (3 + 4)``` is 14.
 
 It contains a loop, which takes first element from a queue, processes it and eventually adds new elements to the queue. It accepts an argument ```digits_options```, which is just initial state of the queue.
 
