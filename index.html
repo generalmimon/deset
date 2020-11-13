@@ -139,6 +139,12 @@
 				<label>Digits: </label>
 				<div id="digits"></div>
 			</div>
+			<div>
+				<label for="disable_grouping">
+					<input type="checkbox" id="disable_grouping">
+					Do not group digits to into multi-digit numbers
+				</label>
+			</div>
 			<label for="desired_num">Desired result: <input class="num-input" type="text" id="desired_num" value="10"></label>
 			<dl class="inp-list">
 				<dt>Number of solutions: </dt>
@@ -153,7 +159,7 @@
 	<fieldset class="sol-fieldset-font">
 		<legend><h2>Solutions</h2></legend>
 		<div>Number of found solutions: <span id="num_sols">-</span></div>
-		<label><input type="checkbox" id="print_latex" checked="checked"> Enable LaTeX typesetting</label>
+		<label><input type="checkbox" id="print_latex" checked> Enable LaTeX typesetting</label>
 		<pre id="solutions"></pre>
 	</fieldset>
 	</div>

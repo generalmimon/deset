@@ -5,6 +5,7 @@ var unaryOps = m("unary_ops").getElementsByTagName("input"),
 	binaryOps = m("binary_ops").getElementsByTagName("input");
 var digitsNum = m("digits_num"),
 	digitsContainer = m("digits"),
+	disableGrouping = m("disable_grouping"),
 	solForm = m("sol_form"),
 	solOutput = m("solutions");
 var stopOpts = [m("fst"), m("arb"), m("all")],
@@ -48,6 +49,8 @@ function printSolutions() {
 	for(j = 0, num_bops = binaryOps.length; j < num_bops; j++) {
 		Deset.set_binary_enabled_state(binaryOps[j].id, binaryOps[j].checked);
 	}
+	var is_grouping_enabled = !disableGrouping.checked;
+	Deset.set_grouping_state(is_grouping_enabled);
 	var digits = getDigits(),
 		desired_num = +desiredNum.value,
 		sol_limit = 0,

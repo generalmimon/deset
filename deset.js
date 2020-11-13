@@ -106,12 +106,13 @@ function unary_factorial(a) {
 }
 var UNARY_OPERATIONS = [unary_minus, unary_sqrt, unary_factorial],
 	BINARY_OPERATORS = ['+', '*', '/', '^'],
-binary_enabled = {
-	"binary_plus": true,
-	"binary_mult": true,
-	"binary_div": true,
-	"binary_pow": true
-};
+	binary_enabled = {
+		"binary_plus": true,
+		"binary_mult": true,
+		"binary_div": true,
+		"binary_pow": true
+	},
+	grouping_enabled = true;
 function binary_plus(a, b) {
 	if(!binary_enabled.binary_plus) {
 		return false;
@@ -313,10 +314,15 @@ function get_solutions(sequence, desired_num, sol_limit) {
 	}
 	var solutions = [];
 	for (var l = 1; l <= num_digits; l++) {
+		console.log("num_digits:", num_digits);
 		for (var i_bg = 0, bg_len = binary_grouping_generic_options_by_len[l].length, bg_opt; bg_opt = binary_grouping_generic_options_by_len[l][i_bg], i_bg < bg_len; i_bg++) {
+			console.log("  bg_opt:", JSON.stringify(bg_opt));
 			for (var i_gd = 0, i_gd_len = grouped_digits_options_by_len[l].length, gd_opt; gd_opt = grouped_digits_options_by_len[l][i_gd], i_gd < i_gd_len; i_gd++) {
+				console.log("    gd_opt:", gd_opt);
 				var binary_grouping = get_specific_binary_grouping(bg_opt, gd_opt),
 					sols = eval_potential_solutions(binary_grouping, desired_num);
+				// console.log(JSON.stringify(binary_grouping));
+				console.log("      sols:", sols);
 				for (var i_sol = 0, sols_len = Math.min(sols.length, sol_limit); i_sol < sols_len; i_sol++) {
 					solutions.push(sols[i_sol]);
 				}
@@ -437,11 +443,15 @@ function set_unary_enabled_state(op_name, value) {
 function set_binary_enabled_state(op_name, value) {
 	binary_enabled[op_name] = value;
 }
+function set_grouping_state(value) {
+	grouping_enabled = value;
+}
 return {
 	get_solutions: get_solutions,
 	HumanPrinter: HumanPrinter,
 	LatexPrinter: LatexPrinter,
 	set_unary_enabled_state: set_unary_enabled_state,
-	set_binary_enabled_state: set_binary_enabled_state
+	set_binary_enabled_state: set_binary_enabled_state,
+	set_grouping_state: set_grouping_state
 };
 })();
